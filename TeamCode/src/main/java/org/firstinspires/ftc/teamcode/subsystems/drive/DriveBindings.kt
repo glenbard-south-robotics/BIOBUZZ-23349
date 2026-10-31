@@ -1,13 +1,14 @@
-package org.firstinspires.ftc.teamcode.config
+package org.firstinspires.ftc.teamcode.subsystems.drive
 
 import com.bylazar.configurables.annotations.Configurable
+import org.firstinspires.ftc.teamcode.state.AnalogAction
+import org.firstinspires.ftc.teamcode.state.AnalogBinding
+import org.firstinspires.ftc.teamcode.state.BinaryAction
+import org.firstinspires.ftc.teamcode.state.BinaryBinding
 import org.firstinspires.ftc.teamcode.state.GamepadId
 
-/**
- * Panels-owned default gamepad bindings for teleop.
- */
 @Configurable
-object BindingsConfig {
+object DriveBindings {
     @JvmField
     var driveX: AnalogBinding =
         AnalogBinding(

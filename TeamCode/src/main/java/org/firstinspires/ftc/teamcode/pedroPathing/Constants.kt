@@ -9,7 +9,7 @@ import com.pedropathing.revhub.drivetrains.MecanumConfig
 import com.pedropathing.revhub.localizers.PinpointConfig
 import com.pedropathing.revhub.localizers.PinpointLocalizer
 import com.qualcomm.robotcore.hardware.HardwareMap
-import org.firstinspires.ftc.teamcode.config.DriveConfig
+import org.firstinspires.ftc.teamcode.subsystems.drive.DriveConfig
 
 @Configurable
 object Constants {

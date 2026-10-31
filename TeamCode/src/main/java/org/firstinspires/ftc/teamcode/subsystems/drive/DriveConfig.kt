@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.config
+package org.firstinspires.ftc.teamcode.subsystems.drive
 
 import com.bylazar.configurables.annotations.Configurable
 import org.firstinspires.ftc.teamcode.state.MotorDirection

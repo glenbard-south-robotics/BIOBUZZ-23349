@@ -1,7 +1,7 @@
 package org.firstinspires.ftc.teamcode.opmode
 
 import com.pedropathing.ivy.Scheduler
-import org.firstinspires.ftc.teamcode.subsystems.Drive
+import org.firstinspires.ftc.teamcode.subsystems.drive.Drive
 
 abstract class PedroCommandOpMode : CommandOpMode() {
     protected lateinit var drive: Drive

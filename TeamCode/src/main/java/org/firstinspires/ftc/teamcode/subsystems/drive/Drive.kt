@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.subsystems
+package org.firstinspires.ftc.teamcode.subsystems.drive
 
 import com.pedropathing.drivetrain.DrivePowers
 import com.pedropathing.follower.ManualDrive
@@ -7,13 +7,13 @@ import com.pedropathing.ivy.commands.Commands
 import com.pedropathing.ivy.pedro.PedroCommands
 import com.pedropathing.math.Pose
 import com.pedropathing.paths.Path
-import org.firstinspires.ftc.teamcode.config.BindingsConfig
-import org.firstinspires.ftc.teamcode.config.DriveConfig
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants
 import org.firstinspires.ftc.teamcode.state.managers.BindingManager
 import org.firstinspires.ftc.teamcode.state.managers.HardwareManager
 import kotlin.time.Clock
 import kotlin.time.Instant
+
+
 
 class Drive(
     hardwareManager: HardwareManager,
@@ -73,24 +73,24 @@ class Drive(
     }
 
     fun teleopDrive(
-        bindings: BindingManager,
+        bindingManager: BindingManager,
         robotCentric: Boolean = true,
     ): Command =
         Commands
             .infinite {
                 var forward =
-                    bindings.readAnalog(BindingsConfig.driveY).toDouble() * DriveConfig.maxSpeed
+                    bindingManager.readAnalog(DriveBindings.driveY).toDouble() * DriveConfig.maxSpeed
                 var strafe =
-                    bindings
-                        .readAnalog(BindingsConfig.driveX)
+                    bindingManager
+                        .readAnalog(DriveBindings.driveX)
                         .toDouble() * DriveConfig.maxSpeed * DriveConfig.strafeMultiplier
                 var turn =
-                    bindings
-                        .readAnalog(BindingsConfig.driveTurn)
+                    bindingManager
+                        .readAnalog(DriveBindings.driveTurn)
                         .toDouble() * DriveConfig.maxSpeed * DriveConfig.turnMultiplier
 
-                if (bindings.readBinary(BindingsConfig.drivePreciseMode)) {
-                    togglePreciseMode(bindings)
+                if (bindingManager.readBinary(DriveBindings.drivePreciseMode)) {
+                    togglePreciseMode(bindingManager)
                 }
 
                 if (preciseMode) {

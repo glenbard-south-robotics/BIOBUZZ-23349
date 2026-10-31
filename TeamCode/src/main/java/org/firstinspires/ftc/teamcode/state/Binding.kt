@@ -1,6 +1,4 @@
-package org.firstinspires.ftc.teamcode.config
-
-import org.firstinspires.ftc.teamcode.state.GamepadId
+package org.firstinspires.ftc.teamcode.state
 
 /**
  * A binary action on a gamepad, such as a button press
