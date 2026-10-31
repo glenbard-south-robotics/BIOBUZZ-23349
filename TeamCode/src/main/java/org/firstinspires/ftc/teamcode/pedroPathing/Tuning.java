@@ -22,6 +22,7 @@ public class Tuning {
         return new Tests(hardwareMap -> new Mecanum(hardwareMap, Constants.getDrivetrainConfig()), (hardwareMap -> new PinpointLocalizer(hardwareMap, Constants.getLocalizerConfig())), () -> new Foresight(Constants.getForesightConfig()));
     }
 
+
     @Tuner
     public static Procedure pinpointTuner() {
         return new PinpointTuner();

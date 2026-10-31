@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.opmode
 import com.bylazar.telemetry.PanelsTelemetry
 import com.bylazar.telemetry.TelemetryManager
 import com.pedropathing.ivy.Scheduler
+import com.qualcomm.hardware.lynx.LynxModule
 import com.qualcomm.robotcore.eventloop.opmode.OpMode
 import org.firstinspires.ftc.teamcode.state.Gamepads
 import org.firstinspires.ftc.teamcode.state.managers.BindingManager
@@ -24,16 +25,32 @@ abstract class CommandOpMode : OpMode() {
     protected lateinit var panelsTelemetry: TelemetryManager
         private set
 
+    protected lateinit var hubs: List<LynxModule>
+
     final override fun init() {
         Scheduler.reset()
-        gamepads = Gamepads(gamepad1, gamepad2)
+
         hardware = HardwareManager(hardwareMap)
+
+        // Enable manual bulk-reads for faster loop times.
+        hubs = hardware.getAll<LynxModule>()
+        for (hub in hubs) {
+            hub.bulkCachingMode = LynxModule.BulkCachingMode.MANUAL
+        }
+
         panelsTelemetry = PanelsTelemetry.telemetry
+
+        gamepads = Gamepads(gamepad1, gamepad2)
         bindings = BindingManager(gamepads)
+
         onInit()
     }
 
     final override fun loop() {
+        for (hub in hubs) {
+            hub.clearBulkCache()
+        }
+
         onLoop()
         Scheduler.execute()
     }

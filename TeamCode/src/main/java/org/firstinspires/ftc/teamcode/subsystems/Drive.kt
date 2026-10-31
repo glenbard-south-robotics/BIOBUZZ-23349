@@ -4,7 +4,9 @@ import com.pedropathing.drivetrain.DrivePowers
 import com.pedropathing.follower.ManualDrive
 import com.pedropathing.ivy.Command
 import com.pedropathing.ivy.commands.Commands
+import com.pedropathing.ivy.pedro.PedroCommands
 import com.pedropathing.math.Pose
+import com.pedropathing.paths.Path
 import org.firstinspires.ftc.teamcode.config.BindingsConfig
 import org.firstinspires.ftc.teamcode.config.DriveConfig
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants
@@ -16,7 +18,7 @@ import kotlin.time.Instant
 class Drive(
     hardwareManager: HardwareManager,
 ) {
-    val follower = Constants.createFollower(hardwareManager.hardwareMap)
+    private val follower = Constants.createFollower(hardwareManager.hardwareMap)
 
     val pose: Pose get() = follower.pose()
 
@@ -46,9 +48,9 @@ class Drive(
         robotCentric: Boolean = false,
     ) {
         if (robotCentric) {
-            follower.manual(ManualDrive.fieldCentric(forward, strafe, turn, pose.heading()))
-        } else {
             follower.manual(forward, strafe, turn)
+        } else {
+            follower.manual(ManualDrive.fieldCentric(forward, strafe, turn, pose.heading()))
         }
     }
 
@@ -57,9 +59,13 @@ class Drive(
         follower.stop()
     }
 
+    fun follow(path: Path) = PedroCommands.follow(follower, path)
+
+    fun hold(pose: Pose?) = PedroCommands.hold(follower, pose)
+
     fun togglePreciseMode(bindings: BindingManager) {
         val now = Clock.System.now()
-        if (preciseModeLastToggle - now >= DriveConfig.preciseToggleDebounce) return
+        if (now - preciseModeLastToggle < DriveConfig.preciseToggleDebounce) return
 
         preciseModeLastToggle = now
         preciseMode = !preciseMode
@@ -72,7 +78,8 @@ class Drive(
     ): Command =
         Commands
             .infinite {
-                var forward = bindings.readAnalog(BindingsConfig.driveY).toDouble() * DriveConfig.maxSpeed
+                var forward =
+                    bindings.readAnalog(BindingsConfig.driveY).toDouble() * DriveConfig.maxSpeed
                 var strafe =
                     bindings
                         .readAnalog(BindingsConfig.driveX)

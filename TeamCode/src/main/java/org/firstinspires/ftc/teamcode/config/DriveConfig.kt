@@ -14,7 +14,7 @@ object DriveConfig {
     var strafeMultiplier: Double = 1.0
 
     @JvmField
-    var turnMultiplier: Double = 0.8
+    var turnMultiplier: Double = 1.0
 
     @JvmField
     var preciseMultiplier: Double = 0.25
@@ -23,16 +23,16 @@ object DriveConfig {
     var preciseToggleDebounce: Duration = 500.milliseconds
 
     @JvmField
-    var frontLeftName: String = "lf"
+    var frontLeftName: String = "frontLeft"
 
     @JvmField
-    var backLeftName: String = "lr"
+    var backLeftName: String = "backLeft"
 
     @JvmField
-    var frontRightName: String = "rf"
+    var frontRightName: String = "frontRight"
 
     @JvmField
-    var backRightName: String = "rr"
+    var backRightName: String = "backRight"
 
     @JvmField
     var frontLeftDirection: MotorDirection = MotorDirection.REVERSE
