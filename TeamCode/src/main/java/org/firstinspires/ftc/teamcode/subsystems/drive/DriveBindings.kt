@@ -38,5 +38,5 @@ object DriveBindings {
 
     @JvmField
     var drivePreciseMode: BinaryBinding =
-        BinaryBinding(gamepad = GamepadId.ONE, action = BinaryAction.TRIANGLE)
+        BinaryBinding(gamepad = GamepadId.ONE, action = BinaryAction.CROSS)
 }

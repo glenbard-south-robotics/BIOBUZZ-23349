@@ -23,11 +23,6 @@ class Intake(
     var intakeState = IntakeState.OFF
         private set
 
-    private var lastGatePressed = false
-    private var lastForwardPressed = false
-    private var lastReversePressed = false
-    private var lastStopPressed = false
-
     fun toggleGate() {
         setGateOpen(!gateOpen)
     }
@@ -64,28 +59,32 @@ class Intake(
 
     fun teleopRun(bindingManager: BindingManager): Command =
         Commands.infinite {
-            val gatePressed = bindingManager.readBinary(IntakeBindings.toggleGate)
-            if (gatePressed && !lastGatePressed) {
-                toggleGate()
-            }
-            lastGatePressed = gatePressed
+            if (bindingManager.binaryWasPressed(IntakeBindings.toggleGate)) toggleGate()
 
-            val forwardPressed = bindingManager.readBinary(IntakeBindings.toggleForward)
-            if (forwardPressed && !lastForwardPressed) {
-                if (intakeState == IntakeState.FORWARD) stop() else setIntakeState(IntakeState.FORWARD)
+            if (bindingManager.binaryWasPressed(IntakeBindings.toggleForward)) {
+                if (intakeState ==
+                    IntakeState.FORWARD
+                ) {
+                    stop()
+                } else {
+                    setIntakeState(
+                        IntakeState.FORWARD,
+                    )
+                }
             }
-            lastForwardPressed = forwardPressed
 
-            val reversePressed = bindingManager.readBinary(IntakeBindings.toggleReverse)
-            if (reversePressed && !lastReversePressed) {
-                if (intakeState == IntakeState.REVERSE) stop() else setIntakeState(IntakeState.REVERSE)
+            if (bindingManager.binaryWasPressed(IntakeBindings.toggleReverse)) {
+                if (intakeState ==
+                    IntakeState.REVERSE
+                ) {
+                    stop()
+                } else {
+                    setIntakeState(
+                        IntakeState.REVERSE,
+                    )
+                }
             }
-            lastReversePressed = reversePressed
 
-            val stopPressed = bindingManager.readBinary(IntakeBindings.stopIntake)
-            if (stopPressed && !lastStopPressed) {
-                stop()
-            }
-            lastStopPressed = stopPressed
+            if (bindingManager.binaryWasPressed(IntakeBindings.stopIntake)) stop()
         }
 }

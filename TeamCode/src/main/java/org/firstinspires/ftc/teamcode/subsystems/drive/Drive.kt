@@ -70,7 +70,7 @@ class Drive(
         bindings.rumble(DriveConfig.preciseToggleRumbleDuration)
     }
 
-    fun teleopDrive(
+    fun teleopRun(
         bindingManager: BindingManager,
         robotCentric: Boolean = true,
     ): Command =
