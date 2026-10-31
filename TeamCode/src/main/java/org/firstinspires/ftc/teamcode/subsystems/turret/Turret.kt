@@ -22,10 +22,11 @@ class Turret(
         private set
 
     fun setTurretServoPosition(angleDegrees: Double) {
-        val clampedAngle = angleDegrees.coerceIn(
-            -TurretConfig.turretMaxAngleRight,
-            TurretConfig.turretMaxAngleLeft,
-        )
+        val clampedAngle =
+            angleDegrees.coerceIn(
+                -TurretConfig.turretMaxAngleRight,
+                TurretConfig.turretMaxAngleLeft,
+            )
 
         val servoPosition =
             (clampedAngle + TurretConfig.turretMaxAngleRight) / (TurretConfig.turretMaxAngleRight + TurretConfig.turretMaxAngleLeft)
@@ -65,12 +66,16 @@ class Turret(
         aimAtTarget(robotPose, target)
     }
 
-    fun home() = Commands.instant {
-        mode = TurretMode.HOME
-        setTurretServoPosition(0.0)
-    }
+    fun home() =
+        Commands.instant {
+            mode = TurretMode.HOME
+            setTurretServoPosition(0.0)
+        }
 
-    fun autoAimCommand(currentPoseSupplier: () -> Pose, alliance: Alliance): Command =
+    fun autoAimCommand(
+        currentPoseSupplier: () -> Pose,
+        alliance: Alliance,
+    ): Command =
         Commands.infinite {
             updateAutoAim(currentPoseSupplier(), alliance)
         }
@@ -79,16 +84,17 @@ class Turret(
         bindingManager: BindingManager,
         currentPoseSupplier: () -> Pose,
         alliance: Alliance,
-    ): Command = Commands.infinite {
-        if (bindingManager.binaryWasPressed(TurretBindings.goHome)) {
-            mode = TurretMode.HOME
-            setTurretServoPosition(0.0)
-        } else if (bindingManager.binaryWasPressed(TurretBindings.enableAutoAim)) {
-            mode = TurretMode.AUTO_AIM_CLOSEST
-        }
+    ): Command =
+        Commands.infinite {
+            if (bindingManager.binaryWasPressed(TurretBindings.goHome)) {
+                mode = TurretMode.HOME
+                setTurretServoPosition(0.0)
+            } else if (bindingManager.binaryWasPressed(TurretBindings.enableAutoAim)) {
+                mode = TurretMode.AUTO_AIM_CLOSEST
+            }
 
-        if (mode == TurretMode.AUTO_AIM_CLOSEST) {
-            updateAutoAim(currentPoseSupplier(), alliance)
+            if (mode == TurretMode.AUTO_AIM_CLOSEST) {
+                updateAutoAim(currentPoseSupplier(), alliance)
+            }
         }
-    }
 }

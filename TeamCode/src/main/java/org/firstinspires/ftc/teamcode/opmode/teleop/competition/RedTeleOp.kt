@@ -36,20 +36,21 @@ class RedTeleOp : PedroCommandOpMode() {
 
         schedule(
             turret.teleopRun(
-                bindings, currentPoseSupplier = { drive.follower.pose() }, alliance = currentAlliance
-            )
+                bindings,
+                currentPoseSupplier = { drive.follower.pose() },
+                alliance = currentAlliance,
+            ),
         )
     }
 
     override fun onPedroLoop() {
-        val statusColor = when {
-            turret.mode == TurretMode.AUTO_AIM_CLOSEST -> IndicatorColor.BLUE
-
-            intake.intakeState == IntakeState.FORWARD -> IndicatorColor.GREEN
-            intake.intakeState == IntakeState.REVERSE -> IndicatorColor.ORANGE
-
-            else -> if (currentAlliance == Alliance.RED) IndicatorColor.RED else IndicatorColor.AZURE
-        }
+        val statusColor =
+            when {
+                turret.mode == TurretMode.AUTO_AIM_CLOSEST -> IndicatorColor.BLUE
+                intake.intakeState == IntakeState.FORWARD -> IndicatorColor.GREEN
+                intake.intakeState == IntakeState.REVERSE -> IndicatorColor.ORANGE
+                else -> if (currentAlliance == Alliance.RED) IndicatorColor.RED else IndicatorColor.AZURE
+            }
 
         leftIndicator.color = statusColor
         rightIndicator.color = statusColor
