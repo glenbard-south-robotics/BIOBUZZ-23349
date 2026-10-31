@@ -2,7 +2,7 @@ package org.firstinspires.ftc.teamcode.subsystems.ramp
 
 import com.pedropathing.ivy.commands.Commands
 import com.qualcomm.robotcore.hardware.Servo
-import org.firstinspires.ftc.teamcode.state.managers.BindingManager
+import org.firstinspires.ftc.teamcode.state.managers.bindings.BindingManager
 import org.firstinspires.ftc.teamcode.state.managers.HardwareManager
 
 class Ramp(

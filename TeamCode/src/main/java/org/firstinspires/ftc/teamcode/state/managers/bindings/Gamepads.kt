@@ -1,9 +1,9 @@
-package org.firstinspires.ftc.teamcode.state
+package org.firstinspires.ftc.teamcode.state.managers.bindings
 
 import com.qualcomm.robotcore.hardware.Gamepad
 
 /**
- * An identifier for one of the two [org.firstinspires.ftc.teamcode.state.Gamepads]
+ * An identifier for one of the two [Gamepads]
  */
 enum class GamepadId {
     ONE,

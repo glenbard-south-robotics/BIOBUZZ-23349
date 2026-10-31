@@ -1,11 +1,11 @@
 package org.firstinspires.ftc.teamcode.subsystems.drive
 
 import com.bylazar.configurables.annotations.Configurable
-import org.firstinspires.ftc.teamcode.state.AnalogAction
-import org.firstinspires.ftc.teamcode.state.AnalogBinding
-import org.firstinspires.ftc.teamcode.state.BinaryAction
-import org.firstinspires.ftc.teamcode.state.BinaryBinding
-import org.firstinspires.ftc.teamcode.state.GamepadId
+import org.firstinspires.ftc.teamcode.state.managers.bindings.AnalogAction
+import org.firstinspires.ftc.teamcode.state.managers.bindings.AnalogBinding
+import org.firstinspires.ftc.teamcode.state.managers.bindings.BinaryAction
+import org.firstinspires.ftc.teamcode.state.managers.bindings.BinaryBinding
+import org.firstinspires.ftc.teamcode.state.managers.bindings.GamepadId
 
 @Configurable
 object DriveBindings {

@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.state
+package org.firstinspires.ftc.teamcode.state.managers.bindings
 
 /**
  * A binary action on a gamepad, such as a button press

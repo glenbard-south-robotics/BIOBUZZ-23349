@@ -1,7 +1,7 @@
 package org.firstinspires.ftc.teamcode.subsystems.intake
 
 import com.bylazar.configurables.annotations.Configurable
-import org.firstinspires.ftc.teamcode.state.MotorDirection
+import org.firstinspires.ftc.teamcode.model.MotorDirection
 
 @Configurable
 object IntakeConfig {

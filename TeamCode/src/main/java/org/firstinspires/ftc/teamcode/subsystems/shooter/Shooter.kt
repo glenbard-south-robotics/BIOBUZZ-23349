@@ -6,7 +6,7 @@ import com.pedropathing.math.Pose
 import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.DcMotorEx
 import com.qualcomm.robotcore.hardware.Servo
-import org.firstinspires.ftc.teamcode.state.managers.BindingManager
+import org.firstinspires.ftc.teamcode.state.managers.bindings.BindingManager
 import org.firstinspires.ftc.teamcode.state.managers.HardwareManager
 import kotlin.math.hypot
 
@@ -27,6 +27,8 @@ class Shooter(
 
     var flywheelState = FlywheelState.OFF
         private set
+
+    fun getFlywheelVelocity(): Double = flywheelMotor.velocity
 
     fun setFlywheelVelocity(velocity: Double) {
         if (velocity > 0.0) {

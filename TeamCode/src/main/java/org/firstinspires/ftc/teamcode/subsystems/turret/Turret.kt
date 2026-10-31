@@ -4,8 +4,8 @@ import com.pedropathing.ivy.Command
 import com.pedropathing.ivy.commands.Commands
 import com.pedropathing.math.Pose
 import com.qualcomm.robotcore.hardware.Servo
-import org.firstinspires.ftc.teamcode.state.Alliance
-import org.firstinspires.ftc.teamcode.state.managers.BindingManager
+import org.firstinspires.ftc.teamcode.model.Alliance
+import org.firstinspires.ftc.teamcode.state.managers.bindings.BindingManager
 import org.firstinspires.ftc.teamcode.state.managers.HardwareManager
 import kotlin.math.atan2
 import kotlin.math.hypot

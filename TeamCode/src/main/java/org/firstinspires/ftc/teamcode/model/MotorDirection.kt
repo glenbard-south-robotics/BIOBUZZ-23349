@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.state
+package org.firstinspires.ftc.teamcode.model
 
 import com.qualcomm.robotcore.hardware.DcMotorSimple
 
