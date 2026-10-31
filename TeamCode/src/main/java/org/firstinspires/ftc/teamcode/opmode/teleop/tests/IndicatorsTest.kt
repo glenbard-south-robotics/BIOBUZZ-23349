@@ -12,19 +12,20 @@ class IndicatorsTest : CommandOpMode() {
     private val timer = ElapsedTime()
     private var currentIndex = 0
 
-    val colors = listOf(
-        IndicatorColor.OFF,
-        IndicatorColor.RED,
-        IndicatorColor.ORANGE,
-        IndicatorColor.YELLOW,
-        IndicatorColor.SAGE,
-        IndicatorColor.GREEN,
-        IndicatorColor.AZURE,
-        IndicatorColor.BLUE,
-        IndicatorColor.INDIGO,
-        IndicatorColor.VIOLET,
-        IndicatorColor.WHITE,
-    )
+    val colors =
+        listOf(
+            IndicatorColor.OFF,
+            IndicatorColor.RED,
+            IndicatorColor.ORANGE,
+            IndicatorColor.YELLOW,
+            IndicatorColor.SAGE,
+            IndicatorColor.GREEN,
+            IndicatorColor.AZURE,
+            IndicatorColor.BLUE,
+            IndicatorColor.INDIGO,
+            IndicatorColor.VIOLET,
+            IndicatorColor.WHITE,
+        )
 
     override fun onInit() {
         indicators = Indicators(hardware)

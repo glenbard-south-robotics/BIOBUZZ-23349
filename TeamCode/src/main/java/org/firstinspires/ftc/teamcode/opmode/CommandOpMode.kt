@@ -5,9 +5,9 @@ import com.bylazar.telemetry.TelemetryManager
 import com.pedropathing.ivy.Scheduler
 import com.qualcomm.hardware.lynx.LynxModule
 import com.qualcomm.robotcore.eventloop.opmode.OpMode
-import org.firstinspires.ftc.teamcode.state.managers.bindings.Gamepads
-import org.firstinspires.ftc.teamcode.state.managers.bindings.BindingManager
 import org.firstinspires.ftc.teamcode.state.managers.HardwareManager
+import org.firstinspires.ftc.teamcode.state.managers.bindings.BindingManager
+import org.firstinspires.ftc.teamcode.state.managers.bindings.Gamepads
 
 /**
  * Base OpMode that owns the Ivy [Scheduler] lifecycle and shared gamepad bindings.

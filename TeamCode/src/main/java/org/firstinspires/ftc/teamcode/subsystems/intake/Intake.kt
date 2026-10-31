@@ -4,8 +4,8 @@ import com.pedropathing.ivy.Command
 import com.pedropathing.ivy.commands.Commands
 import com.qualcomm.robotcore.hardware.DcMotorEx
 import com.qualcomm.robotcore.hardware.Servo
-import org.firstinspires.ftc.teamcode.state.managers.bindings.BindingManager
 import org.firstinspires.ftc.teamcode.state.managers.HardwareManager
+import org.firstinspires.ftc.teamcode.state.managers.bindings.BindingManager
 
 class Intake(
     hardwareManager: HardwareManager,

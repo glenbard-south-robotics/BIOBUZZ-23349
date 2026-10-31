@@ -1,8 +1,8 @@
 package org.firstinspires.ftc.teamcode.opmode.teleop.competition
 
 import com.pedropathing.ivy.Scheduler.schedule
-import org.firstinspires.ftc.teamcode.opmode.PedroCommandOpMode
 import org.firstinspires.ftc.teamcode.model.Alliance
+import org.firstinspires.ftc.teamcode.opmode.PedroCommandOpMode
 import org.firstinspires.ftc.teamcode.state.RobotState
 import org.firstinspires.ftc.teamcode.subsystems.indicator.IndicatorColor
 import org.firstinspires.ftc.teamcode.subsystems.indicator.Indicators

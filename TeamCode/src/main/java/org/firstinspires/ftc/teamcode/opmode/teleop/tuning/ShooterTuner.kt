@@ -9,25 +9,35 @@ import org.firstinspires.ftc.teamcode.subsystems.shooter.FlywheelState
 import org.firstinspires.ftc.teamcode.subsystems.shooter.Shooter
 import org.firstinspires.ftc.teamcode.subsystems.shooter.ShooterConfig
 
-val adjustHoodUpBinding = BinaryBinding(
-    gamepad = GamepadId.ONE, BinaryAction.DPAD_UP
-)
+val adjustHoodUpBinding =
+    BinaryBinding(
+        gamepad = GamepadId.ONE,
+        BinaryAction.DPAD_UP,
+    )
 
-val adjustHoodDownBinding = BinaryBinding(
-    gamepad = GamepadId.ONE, BinaryAction.DPAD_DOWN
-)
+val adjustHoodDownBinding =
+    BinaryBinding(
+        gamepad = GamepadId.ONE,
+        BinaryAction.DPAD_DOWN,
+    )
 
-val flywheelVelocityUp = BinaryBinding(
-    gamepad = GamepadId.ONE, BinaryAction.DPAD_RIGHT
-)
+val flywheelVelocityUp =
+    BinaryBinding(
+        gamepad = GamepadId.ONE,
+        BinaryAction.DPAD_RIGHT,
+    )
 
-val flywheelVelocityDown = BinaryBinding(
-    gamepad = GamepadId.ONE, BinaryAction.DPAD_LEFT
-)
+val flywheelVelocityDown =
+    BinaryBinding(
+        gamepad = GamepadId.ONE,
+        BinaryAction.DPAD_LEFT,
+    )
 
-val toggleFlywheel = BinaryBinding(
-    gamepad = GamepadId.ONE, BinaryAction.CROSS
-)
+val toggleFlywheel =
+    BinaryBinding(
+        gamepad = GamepadId.ONE,
+        BinaryAction.CROSS,
+    )
 
 @TeleOp(name = "ShooterTuner", group = "Tuning")
 class ShooterTuner : PedroCommandOpMode() {
@@ -39,7 +49,6 @@ class ShooterTuner : PedroCommandOpMode() {
     override fun onPedroInit() {
         shooter = Shooter(hardware)
     }
-
 
     override fun onPedroLoop() {
         if (bindings.binaryWasPressed(flywheelVelocityUp)) {
