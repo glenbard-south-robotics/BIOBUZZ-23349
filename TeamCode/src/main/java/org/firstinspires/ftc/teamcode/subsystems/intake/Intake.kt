@@ -7,7 +7,9 @@ import com.qualcomm.robotcore.hardware.Servo
 import org.firstinspires.ftc.teamcode.state.managers.BindingManager
 import org.firstinspires.ftc.teamcode.state.managers.HardwareManager
 
-class Intake(hardwareManager: HardwareManager) {
+class Intake(
+    hardwareManager: HardwareManager,
+) {
     private val intakeMotor =
         hardwareManager.requireHardware<DcMotorEx>(IntakeConfig.intakeMotorName).apply {
             direction = IntakeConfig.intakeMotorDirection.toDcMotorDirection()
@@ -38,11 +40,12 @@ class Intake(hardwareManager: HardwareManager) {
 
     fun setIntakeState(state: IntakeState) {
         this.intakeState = state
-        intakeMotor.power = when (state) {
-            IntakeState.FORWARD -> IntakeConfig.intakeMotorForwardPower
-            IntakeState.REVERSE -> IntakeConfig.intakeMotorReversePower
-            IntakeState.OFF -> 0.0
-        }
+        intakeMotor.power =
+            when (state) {
+                IntakeState.FORWARD -> IntakeConfig.intakeMotorForwardPower
+                IntakeState.REVERSE -> IntakeConfig.intakeMotorReversePower
+                IntakeState.OFF -> 0.0
+            }
     }
 
     fun stop() {
@@ -50,36 +53,39 @@ class Intake(hardwareManager: HardwareManager) {
     }
 
     fun openGate() = Commands.instant { setGateOpen(true) }
+
     fun closeGate() = Commands.instant { setGateOpen(false) }
 
     fun intakeForward() = Commands.instant { setIntakeState(IntakeState.FORWARD) }
+
     fun intakeReverse() = Commands.instant { setIntakeState(IntakeState.REVERSE) }
+
     fun intakeOff() = Commands.instant { setIntakeState(IntakeState.OFF) }
 
-    fun teleopRun(bindingManager: BindingManager): Command = Commands.infinite {
-        val gatePressed = bindingManager.readBinary(IntakeBindings.toggleGate)
-        if (gatePressed && !lastGatePressed) {
-            toggleGate()
-        }
-        lastGatePressed = gatePressed
+    fun teleopRun(bindingManager: BindingManager): Command =
+        Commands.infinite {
+            val gatePressed = bindingManager.readBinary(IntakeBindings.toggleGate)
+            if (gatePressed && !lastGatePressed) {
+                toggleGate()
+            }
+            lastGatePressed = gatePressed
 
-        val forwardPressed = bindingManager.readBinary(IntakeBindings.toggleForward)
-        if (forwardPressed && !lastForwardPressed) {
-            if (intakeState == IntakeState.FORWARD) stop() else setIntakeState(IntakeState.FORWARD)
-        }
-        lastForwardPressed = forwardPressed
+            val forwardPressed = bindingManager.readBinary(IntakeBindings.toggleForward)
+            if (forwardPressed && !lastForwardPressed) {
+                if (intakeState == IntakeState.FORWARD) stop() else setIntakeState(IntakeState.FORWARD)
+            }
+            lastForwardPressed = forwardPressed
 
-        val reversePressed = bindingManager.readBinary(IntakeBindings.toggleReverse)
-        if (reversePressed && !lastReversePressed) {
-            if (intakeState == IntakeState.REVERSE) stop() else setIntakeState(IntakeState.REVERSE)
-        }
-        lastReversePressed = reversePressed
+            val reversePressed = bindingManager.readBinary(IntakeBindings.toggleReverse)
+            if (reversePressed && !lastReversePressed) {
+                if (intakeState == IntakeState.REVERSE) stop() else setIntakeState(IntakeState.REVERSE)
+            }
+            lastReversePressed = reversePressed
 
-        val stopPressed = bindingManager.readBinary(IntakeBindings.stopIntake)
-        if (stopPressed && !lastStopPressed) {
-            stop()
+            val stopPressed = bindingManager.readBinary(IntakeBindings.stopIntake)
+            if (stopPressed && !lastStopPressed) {
+                stop()
+            }
+            lastStopPressed = stopPressed
         }
-        lastStopPressed = stopPressed
-    }
-
 }
