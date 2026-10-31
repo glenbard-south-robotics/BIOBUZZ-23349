@@ -31,11 +31,13 @@ class Ramp(
     }
 
     fun raiseRamp() = Commands.instant { setRampState(RampState.UP) }
+
     fun lowerRamp() = Commands.instant { setRampState(RampState.DOWN) }
 
-    fun teleopRun(bindingManager: BindingManager) = Commands.infinite {
-        if (bindingManager.binaryWasPressed(RampBindings.toggleRamp)) {
-            setRampState(if (this.state == RampState.UP) RampState.DOWN else RampState.UP)
+    fun teleopRun(bindingManager: BindingManager) =
+        Commands.infinite {
+            if (bindingManager.binaryWasPressed(RampBindings.toggleRamp)) {
+                setRampState(if (this.state == RampState.UP) RampState.DOWN else RampState.UP)
+            }
         }
-    }
 }

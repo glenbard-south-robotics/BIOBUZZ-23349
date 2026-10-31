@@ -16,7 +16,7 @@ import kotlin.time.Instant
 class Drive(
     hardwareManager: HardwareManager,
 ) {
-    private val follower = Constants.createFollower(hardwareManager.hardwareMap)
+    val follower = Constants.createFollower(hardwareManager.hardwareMap)
 
     val pose: Pose get() = follower.pose()
 

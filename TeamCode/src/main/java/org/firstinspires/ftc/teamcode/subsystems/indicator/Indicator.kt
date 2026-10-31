@@ -11,7 +11,7 @@ class Indicator(
     name: String,
 ) {
     private val indicatorLight = hardwareManager.requireHardware<Servo>(name)
-    var color = IndicatorColor.OFF
+    var color: IndicatorColor = IndicatorColor.OFF
 
     fun update() {
         indicatorLight.position = color.pwm

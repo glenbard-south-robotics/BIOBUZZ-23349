@@ -80,6 +80,7 @@ class BindingManager(
      */
     fun readAnalog(binding: AnalogBinding): Float {
         val gamepad = gamepads[binding.gamepad]
+
         val raw =
             when (binding.action) {
                 AnalogAction.LEFT_STICK_X -> gamepad.left_stick_x
