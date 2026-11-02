@@ -26,7 +26,7 @@ abstract class BasePark(
     }
 
     override fun onPedroStart() {
-        indicators.set(IndicatorConfig.IDLE)
+        indicators.set(IndicatorConfig.allianceDefault(alliance))
 
         sequential(
             drive.follow(parkPath()),
@@ -36,7 +36,9 @@ abstract class BasePark(
 
     override fun onPedroLoop() {
         if (drive.follower.holding()) {
-            indicators.set(IndicatorConfig.DONE_OR_PARKED)
+            indicators.set(IndicatorConfig.AUTO_DONE)
+        } else {
+            indicators.set(IndicatorConfig.AUTO_TRAVELING)
         }
     }
 
