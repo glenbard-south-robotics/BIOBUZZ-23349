@@ -29,13 +29,16 @@ object IntakeConfig {
 
     @JvmField
     var bottomColorSensorName = "bottomColorSensor"
+
     @JvmField
     var topColorSensorName = "topColorSensor"
 
     @JvmField
     var distanceUnit = DistanceUnit.CM
+
     @JvmField
     var bottomDistanceThreshold = 4.0
+
     @JvmField
     var topDistanceThreshold = 4.0
 }

@@ -62,16 +62,15 @@ abstract class BaseCompetition(
         val isElementLoaded = intake.isElementDetectedAtBottom() || intake.isElementDetectedAtTop()
         val isQueueFull = intake.isElementDetectedAtBottom() && intake.isElementDetectedAtTop()
 
-        val statusColor = when {
-            isFlywheelReady && isTurretLocked -> IndicatorConfig.READY_TO_SHOOT
-            isQueueFull || isElementLoaded -> IndicatorConfig.INTAKE_FULL
-            intake.intakeState == IntakeState.REVERSE -> IndicatorConfig.ERROR_OR_REVERSE
-
-            shooter.flywheelState == FlywheelState.SPINNING -> IndicatorConfig.TELEOP_FLYWHEEL_SPINNING
-            turret.mode == TurretMode.AUTO_AIM_CLOSEST -> IndicatorConfig.TELEOP_TURRET_AUTO_AIM
-
-            else -> IndicatorConfig.allianceDefault(currentAlliance)
-        }
+        val statusColor =
+            when {
+                isFlywheelReady && isTurretLocked -> IndicatorConfig.READY_TO_SHOOT
+                isQueueFull || isElementLoaded -> IndicatorConfig.INTAKE_FULL
+                intake.intakeState == IntakeState.REVERSE -> IndicatorConfig.ERROR_OR_REVERSE
+                shooter.flywheelState == FlywheelState.SPINNING -> IndicatorConfig.TELEOP_FLYWHEEL_SPINNING
+                turret.mode == TurretMode.AUTO_AIM_CLOSEST -> IndicatorConfig.TELEOP_TURRET_AUTO_AIM
+                else -> IndicatorConfig.allianceDefault(currentAlliance)
+            }
 
         indicators.set(statusColor)
     }

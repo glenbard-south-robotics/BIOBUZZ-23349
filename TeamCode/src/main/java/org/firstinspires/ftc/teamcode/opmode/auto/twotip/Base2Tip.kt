@@ -23,7 +23,10 @@ import org.firstinspires.ftc.teamcode.subsystems.turret.TurretConfig
 import kotlin.math.abs
 
 enum class Base2TipStatus {
-    IDLE, FLOWERS, SCORING, PARKED,
+    IDLE,
+    FLOWERS,
+    SCORING,
+    PARKED,
 }
 
 abstract class Base2Tip(
@@ -55,46 +58,44 @@ abstract class Base2Tip(
         drive.follower.setPose(startingPose)
     }
 
-    fun shoot(): CommandBuilder = sequential(
-        instant { status = Base2TipStatus.SCORING },
-        race(
-            waitUntil { abs(ShooterConfig.flywheelVelocity - shooter.getFlywheelVelocity()) <= 50 },
-            waitMs(1500.0),
-        ), // make sure the flywheel is at speed
-        intake.intakeForward(),
-        intake.openGate(),
-
-        waitUntil { !intake.isElementDetectedAtTop() },
-        waitUntil { !intake.isElementDetectedAtBottom() },
-        waitMs(200.0),
-
-        intake.closeGate(),
-        intake.intakeOff(),
-        instant { status = Base2TipStatus.IDLE },
-    )
-
-    fun flower(flowerPath: Path): CommandBuilder = sequential(
-        instant { status = Base2TipStatus.FLOWERS },
-        ramp.lowerRamp(),
-        intake.intakeForward(),
-        drive.follow(flowerPath),
-
-        race(
-            waitUntil { intake.isElementDetectedAtBottom() && intake.isElementDetectedAtTop() },
-            waitMs(2000.0),
-        ),
-        waitMs(250.0),
-
-        parallel(
+    fun shoot(): CommandBuilder =
+        sequential(
+            instant { status = Base2TipStatus.SCORING },
+            race(
+                waitUntil { abs(ShooterConfig.flywheelVelocity - shooter.getFlywheelVelocity()) <= 50 },
+                waitMs(1500.0),
+            ), // make sure the flywheel is at speed
+            intake.intakeForward(),
+            intake.openGate(),
+            waitUntil { !intake.isElementDetectedAtTop() },
+            waitUntil { !intake.isElementDetectedAtBottom() },
+            waitMs(200.0),
+            intake.closeGate(),
             intake.intakeOff(),
-            drive.follow(flowerPath.reverseTangent()), // back out of the flower
-            sequential(
-                waitMs(1000.0), // wait so the ramp doesn't get caught on the flower
-                ramp.raiseRamp(),
+            instant { status = Base2TipStatus.IDLE },
+        )
+
+    fun flower(flowerPath: Path): CommandBuilder =
+        sequential(
+            instant { status = Base2TipStatus.FLOWERS },
+            ramp.lowerRamp(),
+            intake.intakeForward(),
+            drive.follow(flowerPath),
+            race(
+                waitUntil { intake.isElementDetectedAtBottom() && intake.isElementDetectedAtTop() },
+                waitMs(2000.0),
             ),
-        ),
-        instant { status = Base2TipStatus.IDLE },
-    )
+            waitMs(250.0),
+            parallel(
+                intake.intakeOff(),
+                drive.follow(flowerPath.reverseTangent()), // back out of the flower
+                sequential(
+                    waitMs(1000.0), // wait so the ramp doesn't get caught on the flower
+                    ramp.raiseRamp(),
+                ),
+            ),
+            instant { status = Base2TipStatus.IDLE },
+        )
 
     override fun onPedroStart() {
         indicators.set(IndicatorConfig.allianceDefault(alliance))

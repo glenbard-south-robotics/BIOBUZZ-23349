@@ -24,11 +24,18 @@ import org.firstinspires.ftc.teamcode.subsystems.turret.TurretConfig
 import kotlin.math.abs
 
 private enum class Status {
-    IDLE, TRAVELING, WAITING_FOR_FLYWHEEL, FIRING, DONE,
+    IDLE,
+    TRAVELING,
+    WAITING_FOR_FLYWHEEL,
+    FIRING,
+    DONE,
 }
 
-abstract class Base1Tip(val startPose: Pose, val scorePose: Pose, val alliance: Alliance) :
-    PedroCommandOpMode() {
+abstract class Base1Tip(
+    val startPose: Pose,
+    val scorePose: Pose,
+    val alliance: Alliance,
+) : PedroCommandOpMode() {
     private var status = Status.IDLE
 
     fun scorePath(): Path = Paths.line(startPose, scorePose).linear(startPose, scorePose)
@@ -47,24 +54,23 @@ abstract class Base1Tip(val startPose: Pose, val scorePose: Pose, val alliance: 
         drive.follower.setPose(startPose)
     }
 
-    fun shoot(): CommandBuilder = sequential(
-        instant { status = Status.WAITING_FOR_FLYWHEEL },
-        race(
-            waitUntil { abs(ShooterConfig.flywheelVelocity - shooter.getFlywheelVelocity()) <= 50 },
-            waitMs(1500.0),
-        ), // make sure the flywheel is at speed
-        instant { status = Status.FIRING },
-        intake.intakeForward(),
-        intake.openGate(),
-
-        waitUntil { !intake.isElementDetectedAtTop() },
-        waitUntil { !intake.isElementDetectedAtBottom() },
-        waitMs(200.0),
-
-        intake.closeGate(),
-        intake.intakeOff(),
-        instant { status = Status.IDLE },
-    )
+    fun shoot(): CommandBuilder =
+        sequential(
+            instant { status = Status.WAITING_FOR_FLYWHEEL },
+            race(
+                waitUntil { abs(ShooterConfig.flywheelVelocity - shooter.getFlywheelVelocity()) <= 50 },
+                waitMs(1500.0),
+            ), // make sure the flywheel is at speed
+            instant { status = Status.FIRING },
+            intake.intakeForward(),
+            intake.openGate(),
+            waitUntil { !intake.isElementDetectedAtTop() },
+            waitUntil { !intake.isElementDetectedAtBottom() },
+            waitMs(200.0),
+            intake.closeGate(),
+            intake.intakeOff(),
+            instant { status = Status.IDLE },
+        )
 
     override fun onPedroStart() {
         schedule(

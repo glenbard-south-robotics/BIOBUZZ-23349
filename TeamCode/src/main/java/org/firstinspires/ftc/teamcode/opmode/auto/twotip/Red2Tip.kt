@@ -24,12 +24,13 @@ val redScoreToPark: Path = Paths.line(C.score, C.park).constant(C.park)
     group = "2Tip",
     preselectTeleOp = "RedCompetition",
 )
-class Red2Tip : Base2Tip(
-    redStartToStartingFlower,
-    redIntoStartingFlower,
-    redToScore,
-    redScoreToFlower,
-    redIntoScoreFlower,
-    redScoreToPark,
-    Alliance.RED,
-)
+class Red2Tip :
+    Base2Tip(
+        redStartToStartingFlower,
+        redIntoStartingFlower,
+        redToScore,
+        redScoreToFlower,
+        redIntoScoreFlower,
+        redScoreToPark,
+        Alliance.RED,
+    )
