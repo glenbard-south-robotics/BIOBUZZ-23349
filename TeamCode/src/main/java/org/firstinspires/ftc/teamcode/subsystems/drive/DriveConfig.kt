@@ -23,6 +23,9 @@ object DriveConfig {
     var preciseToggleDebounce: Duration = 500.milliseconds
 
     @JvmField
+    var maxTeleOpDeltaPower = 0.15
+
+    @JvmField
     var frontLeftName: String = "frontLeft"
 
     @JvmField
