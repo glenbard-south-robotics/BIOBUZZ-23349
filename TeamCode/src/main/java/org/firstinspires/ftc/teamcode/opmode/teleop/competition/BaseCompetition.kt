@@ -4,7 +4,7 @@ import com.pedropathing.ivy.Scheduler.schedule
 import org.firstinspires.ftc.teamcode.model.Alliance
 import org.firstinspires.ftc.teamcode.opmode.PedroCommandOpMode
 import org.firstinspires.ftc.teamcode.state.RobotState
-import org.firstinspires.ftc.teamcode.subsystems.indicator.IndicatorColor
+import org.firstinspires.ftc.teamcode.subsystems.indicator.IndicatorConfig
 import org.firstinspires.ftc.teamcode.subsystems.indicator.Indicators
 import org.firstinspires.ftc.teamcode.subsystems.intake.Intake
 import org.firstinspires.ftc.teamcode.subsystems.intake.IntakeState
@@ -12,6 +12,7 @@ import org.firstinspires.ftc.teamcode.subsystems.ramp.Ramp
 import org.firstinspires.ftc.teamcode.subsystems.shooter.FlywheelState
 import org.firstinspires.ftc.teamcode.subsystems.shooter.Shooter
 import org.firstinspires.ftc.teamcode.subsystems.turret.Turret
+import org.firstinspires.ftc.teamcode.subsystems.turret.TurretConfig
 import org.firstinspires.ftc.teamcode.subsystems.turret.TurretMode
 
 abstract class BaseCompetition(
@@ -44,17 +45,33 @@ abstract class BaseCompetition(
                 alliance = currentAlliance,
             ),
         )
+
+        schedule(
+            shooter.autoTrackHoodCommand(
+                currentPoseSupplier = { drive.follower.pose() },
+                targetPoseSupplier = {
+                    if (currentAlliance == Alliance.RED) TurretConfig.redHiveClosePose else TurretConfig.blueHiveClosePose
+                },
+            ),
+        )
     }
 
     override fun onPedroLoop() {
-        val statusColor =
-            when {
-                shooter.flywheelState == FlywheelState.SPINNING -> IndicatorColor.VIOLET
-                turret.mode == TurretMode.AUTO_AIM_CLOSEST -> IndicatorColor.BLUE
-                intake.intakeState == IntakeState.FORWARD -> IndicatorColor.GREEN
-                intake.intakeState == IntakeState.REVERSE -> IndicatorColor.ORANGE
-                else -> if (currentAlliance == Alliance.RED) IndicatorColor.RED else IndicatorColor.AZURE
-            }
+        val isFlywheelReady = shooter.flywheelState == FlywheelState.SPINNING
+        val isTurretLocked = turret.mode == TurretMode.AUTO_AIM_CLOSEST
+        val isElementLoaded = intake.isElementDetectedAtBottom() || intake.isElementDetectedAtTop()
+        val isQueueFull = intake.isElementDetectedAtBottom() && intake.isElementDetectedAtTop()
+
+        val statusColor = when {
+            isFlywheelReady && isTurretLocked -> IndicatorConfig.READY_TO_SHOOT
+            isQueueFull || isElementLoaded -> IndicatorConfig.INTAKE_FULL
+            intake.intakeState == IntakeState.REVERSE -> IndicatorConfig.ERROR_OR_REVERSE
+
+            shooter.flywheelState == FlywheelState.SPINNING -> IndicatorConfig.TELEOP_FLYWHEEL_SPINNING
+            turret.mode == TurretMode.AUTO_AIM_CLOSEST -> IndicatorConfig.TELEOP_TURRET_AUTO_AIM
+
+            else -> IndicatorConfig.allianceDefault(currentAlliance)
+        }
 
         indicators.set(statusColor)
     }

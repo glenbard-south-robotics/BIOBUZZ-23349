@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.subsystems.intake
 
 import com.bylazar.configurables.annotations.Configurable
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit
 import org.firstinspires.ftc.teamcode.model.MotorDirection
 
 @Configurable
@@ -25,4 +26,16 @@ object IntakeConfig {
 
     @JvmField
     var gateServoClosedPosition: Double = 1.0
+
+    @JvmField
+    var bottomColorSensorName = "bottomColorSensor"
+    @JvmField
+    var topColorSensorName = "topColorSensor"
+
+    @JvmField
+    var distanceUnit = DistanceUnit.CM
+    @JvmField
+    var bottomDistanceThreshold = 4.0
+    @JvmField
+    var topDistanceThreshold = 4.0
 }

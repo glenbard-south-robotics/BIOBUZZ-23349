@@ -6,6 +6,9 @@ dev: build-debug deploy-debug
 # Build and deploy the code to the robot (release).
 release: build-release deploy-release
 
+sloth: _adb-connect
+    gradle :TeamCode:deploySloth
+
 fmt:
     ktlint -F
 

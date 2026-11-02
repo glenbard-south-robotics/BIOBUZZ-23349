@@ -7,7 +7,7 @@ import com.pedropathing.paths.Path
 import org.firstinspires.ftc.teamcode.model.Alliance
 import org.firstinspires.ftc.teamcode.opmode.PedroCommandOpMode
 import org.firstinspires.ftc.teamcode.state.RobotState
-import org.firstinspires.ftc.teamcode.subsystems.indicator.IndicatorColor
+import org.firstinspires.ftc.teamcode.subsystems.indicator.IndicatorConfig
 import org.firstinspires.ftc.teamcode.subsystems.indicator.Indicators
 
 abstract class BasePark(
@@ -26,7 +26,7 @@ abstract class BasePark(
     }
 
     override fun onPedroStart() {
-        indicators.set(if (alliance == Alliance.RED) IndicatorColor.RED else IndicatorColor.AZURE)
+        indicators.set(IndicatorConfig.IDLE)
 
         sequential(
             drive.follow(parkPath()),
@@ -36,7 +36,7 @@ abstract class BasePark(
 
     override fun onPedroLoop() {
         if (drive.follower.holding()) {
-            indicators.set(IndicatorColor.ORANGE)
+            indicators.set(IndicatorConfig.DONE_OR_PARKED)
         }
     }
 

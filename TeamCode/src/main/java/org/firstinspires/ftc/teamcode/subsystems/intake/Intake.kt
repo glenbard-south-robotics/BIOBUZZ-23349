@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.subsystems.intake
 
 import com.pedropathing.ivy.Command
 import com.pedropathing.ivy.commands.Commands
+import com.qualcomm.robotcore.hardware.ColorRangeSensor
 import com.qualcomm.robotcore.hardware.DcMotorEx
 import com.qualcomm.robotcore.hardware.Servo
 import org.firstinspires.ftc.teamcode.state.managers.HardwareManager
@@ -16,6 +17,8 @@ class Intake(
         }
 
     private val gateServo = hardwareManager.requireHardware<Servo>(IntakeConfig.gateServoName)
+    private val bottomColorSensor = hardwareManager.requireHardware<ColorRangeSensor>(IntakeConfig.bottomColorSensorName)
+    private val topColorSensor = hardwareManager.requireHardware<ColorRangeSensor>(IntakeConfig.topColorSensorName)
 
     var gateOpen = true
         private set
@@ -45,6 +48,18 @@ class Intake(
 
     fun stop() {
         setIntakeState(IntakeState.OFF)
+    }
+
+    fun isElementDetectedAtBottom(): Boolean {
+        val distance = bottomColorSensor.getDistance(IntakeConfig.distanceUnit)
+
+        return distance <= IntakeConfig.bottomDistanceThreshold
+    }
+
+    fun isElementDetectedAtTop(): Boolean {
+        val distance = topColorSensor.getDistance(IntakeConfig.distanceUnit)
+
+        return distance <= IntakeConfig.topDistanceThreshold
     }
 
     fun openGate() = Commands.instant { setGateOpen(true) }
