@@ -5,7 +5,9 @@ import org.firstinspires.ftc.teamcode.state.managers.HardwareManager
 
 typealias CurrentAmps = Double
 
-class Power(hardwareManager: HardwareManager) {
+class Power(
+    hardwareManager: HardwareManager,
+) {
     private val powerSwitch: AnalogInput =
         hardwareManager.requireHardware<AnalogInput>(PowerConfig.powerSwitchName)
 
@@ -15,7 +17,5 @@ class Power(hardwareManager: HardwareManager) {
         return (voltage / powerSwitch.maxVoltage) * maxCurrent
     }
 
-    fun readCurrent(): CurrentAmps {
-        return mapVoltageToCurrent(powerSwitch.voltage)
-    }
+    fun readCurrent(): CurrentAmps = mapVoltageToCurrent(powerSwitch.voltage)
 }

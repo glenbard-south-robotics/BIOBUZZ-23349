@@ -75,30 +75,39 @@ class Drive(
     fun teleopRun(
         bindingManager: BindingManager,
         robotCentric: Boolean = true,
-    ): Command = Commands.infinite {
-        var forward =
-            bindingManager.readAnalog(DriveBindings.driveY).toDouble() * DriveConfig.maxSpeed
-        var strafe = bindingManager.readAnalog(DriveBindings.driveX)
-            .toDouble() * DriveConfig.maxSpeed * DriveConfig.strafeMultiplier
-        var turn = bindingManager.readAnalog(DriveBindings.driveTurn)
-            .toDouble() * DriveConfig.maxSpeed * DriveConfig.turnMultiplier
+    ): Command =
+        Commands
+            .infinite {
+                var forward =
+                    bindingManager.readAnalog(DriveBindings.driveY).toDouble() * DriveConfig.maxSpeed
+                var strafe =
+                    bindingManager
+                        .readAnalog(DriveBindings.driveX)
+                        .toDouble() * DriveConfig.maxSpeed * DriveConfig.strafeMultiplier
+                var turn =
+                    bindingManager
+                        .readAnalog(DriveBindings.driveTurn)
+                        .toDouble() * DriveConfig.maxSpeed * DriveConfig.turnMultiplier
 
-        if (bindingManager.readBinary(DriveBindings.drivePreciseMode)) {
-            togglePreciseMode(bindingManager)
-        }
+                if (bindingManager.readBinary(DriveBindings.drivePreciseMode)) {
+                    togglePreciseMode(bindingManager)
+                }
 
-        if (preciseMode) {
-            forward *= DriveConfig.preciseMultiplier
-            strafe *= DriveConfig.preciseMultiplier
-            turn *= DriveConfig.preciseMultiplier
-        }
+                if (preciseMode) {
+                    forward *= DriveConfig.preciseMultiplier
+                    strafe *= DriveConfig.preciseMultiplier
+                    turn *= DriveConfig.preciseMultiplier
+                }
 
-        // Prevent brown-outs by limiting how fast the motors can change direction.
-        forward = lastForward + (forward - lastForward).coerceIn(
-            -DriveConfig.maxTeleOpDeltaPower, DriveConfig.maxTeleOpDeltaPower
-        )
-        lastForward = forward
+                // Prevent brown-outs by limiting how fast the motors can change direction.
+                forward = lastForward +
+                    (forward - lastForward).coerceIn(
+                        -DriveConfig.maxTeleOpDeltaPower,
+                        DriveConfig.maxTeleOpDeltaPower,
+                    )
+                lastForward = forward
 
-        setPowers(forward, strafe, turn, robotCentric)
-    }.setEnd { stop() }.requiring(this)
+                setPowers(forward, strafe, turn, robotCentric)
+            }.setEnd { stop() }
+            .requiring(this)
 }
